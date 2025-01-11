@@ -1,0 +1,7 @@
+.env/
+.DS_Store
+*.pem
+*.crx
+
+# the html page to be fetched
+fetched.html 

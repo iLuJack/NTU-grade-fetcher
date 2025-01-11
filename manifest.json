@@ -1,0 +1,36 @@
+{
+    "manifest_version": 3,
+    "name": "NTU Grade Fetcher",
+    "version": "1.0",
+    "description": "Fetches grades from NTU grading portal",
+    "permissions": [
+        "activeTab",
+        "storage",
+        "tabs",
+        "downloads",
+        "scripting"
+    ],
+
+    "host_permissions": [
+        "*://if190.aca.ntu.edu.tw/*"
+    ],
+
+    "action": {
+        "default_popup": "popup.html"
+    },
+
+    "content_scripts": [
+        {
+            "matches": [
+                "*://if190.aca.ntu.edu.tw/graderanking/*",
+                "*://if190.aca.ntu.edu.tw/graderanking/Stu?lang=zh"
+            ],
+            "js": ["content.js"]
+        }
+    ],
+
+    "web_accessible_resources": [{
+        "resources": ["styles.css"],
+        "matches": ["<all_urls>"]
+    }]
+}
