@@ -2,77 +2,77 @@
 
 A Chrome extension that fetches and displays grades from the NTU grading portal.
 
-## project structure
+## Project Structure
+```
 project/
 ├── src/
 │   ├── js/
 │   │   ├── controllers/
-│   │   │   ├── UIController.js      # UI logic
-│   │   │   ├── DataController.js    # Data operations
-│   │   │   └── AppController.js     # Main application logic
+│   │   │   ├── UIController.js      # Handles UI interactions and updates
+│   │   │   ├── DataController.js    # Manages data operations and API calls
+│   │   │   └── LanguageController.js # Handles i18n and language switching
 │   │   ├── utils/
-│   │   │   ├── i18n.js             # Internationalization
-│   │   │   └── csvHelper.js        # CSV operations
-│   │   └── content.js              # Content script
+│   │   │   ├── i18n.js             # Internationalization utilities
+│   │   │   └── csvHelper.js        # CSV export/import operations
+│   │   └── content.js              # Content script for grade extraction
 │   ├── css/
-│   │   └── styles.css              # Styles
+│   │   └── styles.css              # Extension styling
 │   └── config/
-│       ├── config.js               # Configuration
-│       └── config.template.js      # Template for config
-├── popup.html                      # Main HTML
-└── manifest.json                   # Extension manifest
+│       ├── config.js               # Extension configuration
+│       └── config.template.js      # Template for config settings
+├── popup.html                      # Extension popup interface
+└── manifest.json                   # Extension manifest configuration
+```
 
-## Table of Contents
-- [Overview](#overview)
-- [File Structure](#file-structure)
-- [Installation](#installation)
-- [Development](#development)
-- [Notes](#notes)
-
-## Overview
-This extension allows students to:
-- View their grades from the NTU portal
+## Features
+- View grades from the NTU portal
 - See grade distributions
-- Display results in a clean table format
+- Multi-language support (English/中文)
+- Export grade data to CSV
+- Share anonymous grade distributions
+- Clean and intuitive interface
 
-## File Structure
-```
-.
-├── manifest.json      # Extension configuration
-├── popup.html        # Extension popup interface
-├── popup.js         # Popup functionality
-├── content.js       # Webpage interaction script
-├── styles.css       # Styling for popup
-└── readme.md        # Documentation
-```
-
-## Installation
-1. Open Chrome and navigate to `chrome://extensions/`
-2. Enable "Developer mode" in the top right
-3. Click "Load unpacked" and select the extension directory
-4. The extension icon should appear in your Chrome toolbar
+## Local Installation
+1. Clone this repository
+2. Copy `src/config/config.template.js` to `src/config/config.js` and update settings
+3. Open Chrome and navigate to `chrome://extensions/`
+4. Enable "Developer mode" in the top right
+5. Click "Load unpacked" and select the extension directory
+6. The extension icon should appear in your Chrome toolbar
 
 ## Development
 
 ### Content Script (content.js)
-- Runs in webpage context
-- Extracts grade data from the NTU portal
-- Handles DOM manipulation
-- Communicates with popup.js
+- Runs in the context of NTU portal webpage
+- Extracts grade data from the portal
+- Communicates with the extension popup
 
-### Popup Script (popup.js)
-- Runs in extension context
-- Handles user interface
-- Displays grade data
-- Manages extension popup window
+### Controllers
+- **UIController**: Manages popup interface and user interactions
+- **DataController**: Handles data operations and API communications
+- **LanguageController**: Manages language switching and translations
 
-### Manifest (manifest.json)
-- Defines extension permissions
-- Specifies content scripts
-- Configures extension behavior
+### Configuration
+- Create `config.js` from `config.template.js`
+- Update API endpoints and settings as needed
+- Keep sensitive data in `config.js` (gitignored)
+
+### Styling
+- All styles are maintained in `src/css/styles.css`
+- Supports both light and dark themes
+- Responsive design for popup interface
+
+## Permissions
+The extension requires:
+- `activeTab`: For accessing the current tab
+- `storage`: For saving user preferences
+- `scripting`: For injecting content scripts
 
 ## Notes
-- The extension only works on the NTU grading portal
-- Requires appropriate permissions to access the portal
-- Styles are maintained in a separate CSS file
-- Extension uses Chrome's messaging system for communication
+- Only works on the NTU grading portal
+- Requires appropriate portal access permissions
+- Uses Chrome's messaging system for communication
+- Supports data export and sharing capabilities
+
+## License
+This project is licensed under the MIT License - see the LICENSE file for details.
