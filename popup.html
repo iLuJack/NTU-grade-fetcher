@@ -1,12 +1,92 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>NTU Grade Fetcher</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>NTU Grade Distribution Viewer</title>
+    <link rel="stylesheet" href="src/css/styles.css">
+    <meta charset="UTF-8">
 </head>
 <body>
-    <button id="fetchGrades">Fetch Grades</button>
-    <div id="gradesContainer"></div>
-    <script src="popup.js"></script>
+    <div class="language-switch">
+        <button id="langEN" class="lang-btn active">EN</button>
+        <button id="langZH" class="lang-btn">中文</button>
+    </div>
+
+    <div class="header">
+        <h2 data-en="Grade Distribution Viewer" data-zh="成績分布查看器">Grade Distribution Viewer</h2>
+        <p class="description" data-en="View and analyze your grade distribution" data-zh="查看並分析您的成績分布">
+            View and analyze your grade distribution
+        </p>
+    </div>
+
+    <main class="main-content">
+        <div class="button-container">
+            <button id="fetchGrades" class="primary-button" 
+                data-en="View My Grades" 
+                data-zh="查看我的成績">
+                View My Grades
+            </button>
+        </div>
+
+        <div id="statusMessage" class="status"></div>
+        
+        <section class="data-section">
+            <div id="gradesContainer" class="grades-container"></div>
+            
+            <div id="actionButtons" class="action-buttons" style="display: none;">
+                <div class="action-description">
+                    <p data-en="Available Actions" data-zh="可用操作">Available Actions:</p>
+                    <small class="privacy-note" 
+                        data-en="Only anonymous distribution data will be shared publicly" 
+                        data-zh="僅分享匿名的分布數據">
+                        Only anonymous distribution data will be shared publicly
+                    </small>
+                </div>
+                <div class="button-group">
+                    <button id="downloadCSV" class="secondary-button">
+                        <span data-en="download grade-distribution in .csv file" data-zh="下載成績分佈csv檔">download grade-distribution in .csv file</span>
+                    </button>
+                    <button id="uploadToGist" class="secondary-button">
+                        <span data-en="Share Distribution" data-zh="上傳成績分布數據">Share Distribution</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="preview-section">
+                <p class="preview-text">
+                    <span data-en="View current database" data-zh="查看目前資料庫">View current database</span>: 
+                    <a id="previewLink" href="#" target="_blank" class="preview-link"
+                        data-en="Open Distribution Database" 
+                        data-zh="打開分布資料庫">
+                        Open Distribution Database
+                    </a>
+                </p>
+            </div>
+
+            <div id="uploadedData" class="uploaded-data" style="display: none;">
+                <h3 data-en="Shared Data" data-zh="已分享的數據">Shared Data</h3>
+                <p class="upload-info">
+                    <span data-en="Last shared" data-zh="最後分享時間">Last shared</span>: 
+                    <span id="lastUploadTime"></span>
+                </p>
+                <p>
+                    <span data-en="View data" data-zh="查看數據">View data</span>: 
+                    <a id="gistLink" href="#" target="_blank" 
+                        data-en="Open Distribution Data" 
+                        data-zh="打開分布數據">
+                        Open Distribution Data
+                    </a>
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p data-en="Your privacy matters. Data is only shared when you choose to do so." 
+           data-zh="我們重視您的隱私。只有在您選擇時才會分享數據。">
+            Your privacy matters. Data is only shared when you choose to do so.
+        </p>
+    </footer>
+
+    <script type="module" src="src/js/popup.js"></script>
 </body>
 </html>

@@ -1,18 +1,17 @@
 {
     "manifest_version": 3,
-    "name": "NTU Grade Fetcher",
+    "name": "NTU Grade Distribution Viewer",
     "version": "1.0",
-    "description": "Fetches grades from NTU grading portal",
+    "description": "View and analyze your NTU grade distribution data",
     "permissions": [
         "activeTab",
         "storage",
-        "tabs",
-        "downloads",
         "scripting"
     ],
 
     "host_permissions": [
-        "*://if190.aca.ntu.edu.tw/*"
+        "*://if190.aca.ntu.edu.tw/*",
+        "https://api.github.com/*"
     ],
 
     "action": {
@@ -25,12 +24,15 @@
                 "*://if190.aca.ntu.edu.tw/graderanking/*",
                 "*://if190.aca.ntu.edu.tw/graderanking/Stu?lang=zh"
             ],
-            "js": ["content.js"]
+            "js": ["src/js/content.js"]
         }
     ],
 
     "web_accessible_resources": [{
-        "resources": ["styles.css"],
+        "resources": [
+            "src/css/styles.css",
+            "src/config/*.js"
+        ],
         "matches": ["<all_urls>"]
     }]
 }

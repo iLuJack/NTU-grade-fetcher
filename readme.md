@@ -2,6 +2,26 @@
 
 A Chrome extension that fetches and displays grades from the NTU grading portal.
 
+## project structure
+project/
+├── src/
+│   ├── js/
+│   │   ├── controllers/
+│   │   │   ├── UIController.js      # UI logic
+│   │   │   ├── DataController.js    # Data operations
+│   │   │   └── AppController.js     # Main application logic
+│   │   ├── utils/
+│   │   │   ├── i18n.js             # Internationalization
+│   │   │   └── csvHelper.js        # CSV operations
+│   │   └── content.js              # Content script
+│   ├── css/
+│   │   └── styles.css              # Styles
+│   └── config/
+│       ├── config.js               # Configuration
+│       └── config.template.js      # Template for config
+├── popup.html                      # Main HTML
+└── manifest.json                   # Extension manifest
+
 ## Table of Contents
 - [Overview](#overview)
 - [File Structure](#file-structure)

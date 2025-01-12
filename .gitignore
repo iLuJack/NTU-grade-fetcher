@@ -1,7 +1,7 @@
-.env/
+.env
+*.env
 .DS_Store
+src/config/config.js
 *.pem
 *.crx
-
-# the html page to be fetched
 fetched.html 
