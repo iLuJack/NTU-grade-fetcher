@@ -16,7 +16,6 @@ export class UIController {
             statusMessage: document.getElementById('statusMessage'),
             gradesContainer: document.getElementById('gradesContainer'),
             actionButtons: document.getElementById('actionButtons'),
-            uploadedData: document.getElementById('uploadedData'),
             langEN: document.getElementById('langEN'),
             langZH: document.getElementById('langZH'),
             previewLink: document.getElementById('previewLink'),

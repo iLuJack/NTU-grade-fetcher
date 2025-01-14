@@ -65,14 +65,6 @@ export class AppController {
         window.open('https://forms.gle/QKUrS5xXAgDUTJDt7', '_blank');
     }
 
-    checkPreviousUploads() {
-        chrome.storage.local.get(['lastGistUrl', 'lastUpload'], result => {
-            if (result.lastGistUrl && result.lastUpload) {
-                this.ui.updateUploadInfo(result.lastGistUrl, result.lastUpload);
-            }
-        });
-    }
-
     initializePreviewLink() {
         const gistUrl = DataController.getGistUrl();
         if (gistUrl) {
