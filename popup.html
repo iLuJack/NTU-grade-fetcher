@@ -18,9 +18,9 @@
     <main class="main-content">
         <div class="button-container">
             <button id="fetchGrades" class="primary-button" 
-                data-en="View My Grades" 
-                data-zh="查看我的成績">
-                View My Grades
+                data-en="Fetch Grade Distribution" 
+                data-zh="查看成績分佈">
+                Fetch Grade Distribution
             </button>
         </div>
 
@@ -32,7 +32,7 @@
             <div id="actionButtons" class="action-buttons" style="display: none;">
                 <div class="button-group">
                     <button id="downloadCSV" class="secondary-button">
-                        <span data-en="download grade-distribution in .csv file" data-zh="下載成績分佈csv檔">download grade-distribution in .csv file</span>
+                        <span data-en="download grade-distribution" data-zh="下載成績分佈csv檔">download grade-distribution</span>
                     </button>
                     <button id="uploadToGist" class="secondary-button">
                         <span data-en="One-Click Upload" data-zh="一鍵上傳成績分布">One-Click Upload</span>
@@ -42,18 +42,17 @@
                     </button>
                 </div>
             </div>
-
+            <div id="uploadMessage" class="upload-status"></div>
             <div class="preview-section">
                 <p class="preview-text">
                     <span data-en="Database" data-zh="資料庫">Database</span>: 
                     <a id="previewLink" href="#" target="_blank" class="preview-link"
                         data-en="View uploaded-data" 
-                        data-zh="查看所有已上傳的成績分佈">
+                        data-zh="查看所有已上傳的資料">
                         View uploaded-data 
                     </a>
                 </p>
             </div>
-            <div id="uploadMessage" class="upload-status"></div>
         </section>
     </main>
 

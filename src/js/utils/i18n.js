@@ -8,20 +8,20 @@ export const messages = {
         zh: '成績獲取成功！'
     },
     error: {
-        en: 'Error fetching grades',
-        zh: '獲取成績時出錯'
+        en: 'Error fetching grades, please reload the page',
+        zh: '獲取成績時出錯，請重新載入頁面'
     },
     uploading: {
-        en: 'Uploading grade distribution...',
-        zh: '正在上傳成績分佈...'
+        en: 'Uploading data...',
+        zh: '正在上傳資料...'
     },
     upload_success: {
-        en: 'Grade distribution uploaded successfully!',
-        zh: '成績分佈上傳成功！'
+        en: 'Data uploaded successfully!',
+        zh: '資料上傳成功！'
     },
     upload_error: {
-        en: 'Error uploading grade distribution',
-        zh: '上傳成績分佈時出錯'
+        en: 'Error uploading data',
+        zh: '上傳資料時出錯'
     }
 };
 
