@@ -31,87 +31,77 @@ export class DataController {
         }
     }
 
-    static validateGradeData(grade) {
+    static transformGradeData(grade, useDefaultValues = false) {
         return {
-            year: grade.year || 'N/A',
-            course: grade.course || 'N/A',
-            courseNumber: grade.courseNumber || 'N/A',
-            courseClass: grade.courseClass || 'N/A',
-            grade: grade.grade || 'N/A',
-            distribution: {
-                lower: grade.distribution?.lower || '0%',
-                same: grade.distribution?.same || '0%',
-                higher: grade.distribution?.higher || '0%'
-            }
+            Year: grade.year || (useDefaultValues ? '' : 'N/A'),
+            Course: grade.course || (useDefaultValues ? '' : 'N/A'),
+            'Course Number': grade.courseNumber || (useDefaultValues ? '' : 'N/A'),
+            Class: grade.courseClass || (useDefaultValues ? '' : 'N/A'),
+            Grade: grade.grade || (useDefaultValues ? '' : 'N/A'),
+            'Lower %': grade.distribution?.lower || '0%',
+            'Same %': grade.distribution?.same || '0%',
+            'Higher %': grade.distribution?.higher || '0%'
         };
-    }
-
-    static prepareGradeData(grades) {
-        return grades.map(grade => this.validateGradeData(grade));
     }
 
     static async updateCentralGist(grades) {
         const { GITHUB_TOKEN, GIST_ID } = config;
-        
-        if (!GITHUB_TOKEN || !GIST_ID) {
-            throw new Error('GitHub token or Gist ID not configured');
-        }
+        const statsFilename = 'stats.txt';
 
-        const filename = 'grade_distribution_data.csv';
-        
         try {
-            // 1. Prepare data with all columns (without timestamp)
-            const anonymousData = grades.map(grade => ({
-                Year: grade.year || '',
-                Course: grade.course || '',
-                'Course Number': grade.courseNumber || '',
-                Class: grade.courseClass || '',
-                Grade: grade.grade || '',
-                'Lower %': grade.distribution?.lower || '0%',
-                'Same %': grade.distribution?.same || '0%',
-                'Higher %': grade.distribution?.higher || '0%'
-            }));
-
-            // 2. Define CSV headers - same as download
-            const headers = [
-                'Year',
-                'Course',
-                'Course Number',
-                'Class',
-                'Grade',
-                'Lower %',
-                'Same %',
-                'Higher %'
-            ];
-
-            // 3. Fetch existing content
-            let existingContent = '';
+            // 1. Fetch stats first to determine the filename
+            let statsContent = '';
             try {
-                existingContent = await this.fetchGistContent(GIST_ID, GITHUB_TOKEN, filename);
+                statsContent = await this.fetchGistContent(GIST_ID, GITHUB_TOKEN, statsFilename);
             } catch (error) {
-                console.warn('No existing content found, creating new Gist');
+                console.warn('No existing stats found, initializing new stats');
+                statsContent = 'Total-Contributer : 0';
             }
 
-            // 4. Convert new data to CSV
-            const newContent = convertToCSV(anonymousData, headers);
-            
-            // 5. Combine existing and new content
-            const combinedContent = existingContent 
-                ? existingContent + '\n' + newContent.split('\n').slice(1).join('\n')
-                : newContent;
+            // 2. Get current count and generate filename
+            const match = statsContent.match(/Total-Contributer\s*:\s*(\d+)/);
+            // match[0] is Total-Contributer : n
+            // match[1] is n
+            // 10 means convert to decimal
+            const currentCount = match ? parseInt(match[1], 10) : 0;
+            const newCount = currentCount + 1;
+            const filename = `contributer-${newCount}.csv`;
 
-            // 6. Update Gist
+            // 3. Prepare new grades data
+            const anonymousData = grades.map(grade => this.transformGradeData(grade, true));
+
+            // 4. Convert new data to CSV
+            const headers = [
+                'Year', 'Course', 'Course Number', 'Class',
+                'Grade', 'Lower %', 'Same %', 'Higher %'
+            ];
+
+            const newContent = convertToCSV(anonymousData, headers);
+
+            // 5. Update stats content
+            const updatedStats = statsContent.replace(
+                /Total-Contributer\s*:\s*\d+/,
+                `Total-Contributer : ${newCount}`
+            );
+
+            // 6. Update Gist with both files
             const response = await fetch(`https://api.github.com/gists/${GIST_ID}`, {
+                // PATCH is used to update the existing Gist
                 method: 'PATCH',
                 headers: {
-                    'Authorization': `token ${GITHUB_TOKEN}`,
+                    // Bearer is the auth scheme used by Github
+                    'Authorization': `Bearer ${GITHUB_TOKEN}`,
                     'Content-Type': 'application/json',
+                    'Accept': 'application/vnd.github.v3+json'
                 },
                 body: JSON.stringify({
                     description: 'Anonymous Grade Distribution Data',
                     files: {
                         [filename]: {
-                            content: combinedContent
+                            content: newContent
+                        },
+                        [statsFilename]: {
+                            content: updatedStats
                         }
                     }
                 })
@@ -125,7 +115,8 @@ export class DataController {
             const data = await response.json();
             return {
                 gistId: data.id,
-                gistUrl: data.html_url
+                gistUrl: data.html_url,
+                contributerId: newCount
             };
         } catch (error) {
             console.error('Error updating Gist:', error);
@@ -134,18 +125,38 @@ export class DataController {
     }
 
     static async fetchGistContent(gistId, token, filename) {
-        const response = await fetch(`https://api.github.com/gists/${gistId}`, {
-            headers: {
-                'Authorization': `token ${token}`
+        try {
+            const response = await fetch(`https://api.github.com/gists/${gistId}`, {
+                headers: {
+                    'Accept': 'application/vnd.github.v3+json',
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (!response.ok) {
+                const error = await response.json();
+                throw new Error(`GitHub API Error: ${error.message}`);
             }
-        });
 
-        if (!response.ok) {
-            throw new Error('Failed to fetch Gist');
+            const data = await response.json();
+            const file = data.files[filename];
+            
+            if (!file) {
+                throw new Error(`File "${filename}" not found in gist`);
+            }
+
+            // Handle truncated files
+            if (file.truncated) {
+                const rawResponse = await fetch(file.raw_url);
+                return await rawResponse.text();
+            }
+
+            return file.content || '';
+        } catch (error) {
+            console.error('Error fetching gist:', error);
+            throw error;
         }
-
-        const data = await response.json();
-        return data.files[filename]?.content || '';
     }
 
     static prepareCSVData(grades) {
@@ -154,17 +165,7 @@ export class DataController {
             'Grade', 'Lower %', 'Same %', 'Higher %'
         ];
         
-        const rows = grades.map(grade => ({
-            Year: grade.year,
-            Course: grade.course,
-            'Course Number': grade.courseNumber,
-            Class: grade.courseClass,
-            Grade: grade.grade,
-            'Lower %': grade.distribution.lower,
-            'Same %': grade.distribution.same,
-            'Higher %': grade.distribution.higher
-        }));
-
+        const rows = grades.map(grade => this.transformGradeData(grade, true));
         return convertToCSV(rows, headers);
     }
 
