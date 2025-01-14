@@ -51,6 +51,7 @@ th {
     gap: 10px;
     justify-content: center;
     margin: 15px 0;
+    flex-wrap: wrap;
 }
 
 button {
@@ -72,6 +73,7 @@ button {
     display: flex;
     align-items: center;
     gap: 5px;
+    min-width: fit-content;
 }
 
 button:disabled {
@@ -186,4 +188,12 @@ button:disabled {
 
 .preview-link:hover {
     text-decoration: underline;
+}
+
+#manualUpload {
+    background-color: #ff9800;
+}
+
+#manualUpload:hover {
+    background-color: #f57c00;
 }

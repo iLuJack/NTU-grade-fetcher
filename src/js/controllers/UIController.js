@@ -21,7 +21,8 @@ export class UIController {
             gistLink: document.getElementById('gistLink'),
             langEN: document.getElementById('langEN'),
             langZH: document.getElementById('langZH'),
-            previewLink: document.getElementById('previewLink')
+            previewLink: document.getElementById('previewLink'),
+            manualUploadButton: document.getElementById('manualUpload')
         };
         this.currentGrades = null;
     }

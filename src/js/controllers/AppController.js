@@ -1,6 +1,5 @@
 import { UIController } from './UIController.js';
 import { DataController } from './DataController.js';
-import { downloadCSV } from '../utils/csvHelper.js';
 
 export class AppController {
     constructor() {
@@ -14,6 +13,7 @@ export class AppController {
         this.ui.elements.fetchButton.addEventListener('click', () => this.handleFetchGrades());
         this.ui.elements.downloadButton.addEventListener('click', () => this.handleDownload());
         this.ui.elements.uploadButton.addEventListener('click', () => this.handleUpload());
+        this.ui.elements.manualUploadButton.addEventListener('click', () => { this.handleManualUpload(); });
     }
 
     async handleFetchGrades() {
@@ -66,6 +66,10 @@ export class AppController {
             console.error('General error:', error);
             this.ui.showStatus('error');
         }
+    }
+
+    handleManualUpload() {
+        window.open('https://forms.gle/QKUrS5xXAgDUTJDt7', '_blank');
     }
 
     checkPreviousUploads() {
