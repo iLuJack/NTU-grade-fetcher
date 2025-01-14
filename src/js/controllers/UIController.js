@@ -46,16 +46,17 @@ export class UIController {
         });
     }
 
-    showStatus(messageKey, type = 'loading') {
+    showStatus(messageKey) {
         const message = messages[messageKey]?.[this.currentLang] || messageKey;
         this.elements.statusMessage.textContent = message;
-        this.elements.statusMessage.className = `status ${type}`;
+        this.elements.statusMessage.className = `status ${messageKey}`;
     }
 
-    showUploadStatus(messageKey, type = 'uploading') {
+    showUploadStatus(messageKey) {
         const message = messages[messageKey]?.[this.currentLang] || messageKey;
-        this.elements.uploadMessage.textContent = message;
-        this.elements.uploadMessage.className = `upload-status ${type}`;
+        const uploadMessage = document.getElementById('uploadMessage');
+        uploadMessage.textContent = message;
+        uploadMessage.className = `upload-status ${messageKey}`;
     }
 
     displayGrades(grades) {

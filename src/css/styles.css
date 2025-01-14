@@ -91,25 +91,40 @@ button:disabled {
     transition: all 0.3s ease;
 }
 
-.status.success, .upload-status.upload_success {
+.status.success {
     background-color: #e8f5e9;
     color: #2e7d32;
     display: block;
-    animation: fadeIn 0.3s ease-in;
 }
 
-.status.error, .upload-status.upload_error {
+.status.error {
     background-color: #ffebee;
     color: #c62828;
     display: block;
-    animation: fadeIn 0.3s ease-in;
 }
 
-.status.fetching, .upload-status.uploading {
+.status.fetching {
     background-color: #e3f2fd;
     color: #1565c0;
     display: block;
-    animation: fadeIn 0.3s ease-in;
+}
+
+.upload-status.upload_success {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    display: block;
+}
+
+.upload-status.upload_error {
+    background-color: #ffebee;
+    color: #c62828;
+    display: block;
+}
+
+.upload-status.uploading {
+    background-color: #e3f2fd;
+    color: #1565c0;
+    display: block;
 }
 
 @keyframes fadeIn {
@@ -212,4 +227,35 @@ button:disabled {
 
 #manualUpload:hover {
     background-color: #f57c00;
+}
+
+.github-link {
+    margin-top: 8px;
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.github-link a {
+    color: #1976d2;
+    text-decoration: none;
+    transition: color 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.github-icon {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.2s ease;
+}
+
+.github-link a:hover {
+    color: #1565c0;
+}
+
+.github-link a:hover .github-icon {
+    transform: scale(1.1);
 }

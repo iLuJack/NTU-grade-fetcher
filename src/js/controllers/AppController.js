@@ -24,6 +24,7 @@ export class AppController {
             this.ui.displayGrades(grades);
             this.ui.showStatus('success');
         } catch (error) {
+            console.error('Fetch error:', error);
             this.ui.showStatus('error');
         }
     }

@@ -30,7 +30,8 @@
     "web_accessible_resources": [{
         "resources": [
             "src/css/styles.css",
-            "src/config/*.js"
+            "src/config/*.js",
+            "src/assets/*"
         ],
         "matches": ["<all_urls>"]
     }]
