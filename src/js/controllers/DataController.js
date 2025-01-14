@@ -171,7 +171,7 @@ export class DataController {
 
     static downloadGradesCSV(grades) {
         const csv = this.prepareCSVData(grades);
-        downloadCSV(csv, 'grades.csv');
+        downloadCSV(csv, 'grade-distribution.csv');
     }
 
     static getGistUrl() {

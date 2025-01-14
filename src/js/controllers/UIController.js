@@ -17,7 +17,6 @@ export class UIController {
             gradesContainer: document.getElementById('gradesContainer'),
             actionButtons: document.getElementById('actionButtons'),
             uploadedData: document.getElementById('uploadedData'),
-            lastUploadTime: document.getElementById('lastUploadTime'),
             langEN: document.getElementById('langEN'),
             langZH: document.getElementById('langZH'),
             previewLink: document.getElementById('previewLink'),
