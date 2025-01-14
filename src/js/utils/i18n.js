@@ -12,24 +12,16 @@ export const messages = {
         zh: '獲取成績時出錯'
     },
     uploading: {
-        en: 'Uploading to Gist...',
-        zh: '正在上傳到Gist...'
+        en: 'Uploading grade distribution...',
+        zh: '正在上傳成績分佈...'
     },
     upload_success: {
-        en: 'Successfully uploaded to Gist!',
-        zh: '成功上傳到Gist！'
+        en: 'Grade distribution uploaded successfully!',
+        zh: '成績分佈上傳成功！'
     },
     upload_error: {
-        en: 'Error uploading to Gist',
-        zh: '上傳到Gist時出錯'
-    },
-    no_grades: {
-        en: 'No grades to upload',
-        zh: '沒有成績可上傳'
-    },
-    token_error: {
-        en: 'GitHub token error. Please check your configuration.',
-        zh: 'GitHub令牌錯誤。請檢查您的配置。'
+        en: 'Error uploading grade distribution',
+        zh: '上傳成績分佈時出錯'
     }
 };
 

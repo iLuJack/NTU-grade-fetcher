@@ -81,30 +81,46 @@ button:disabled {
     cursor: not-allowed;
 }
 
-.status {
+.status, .upload-status {
     margin: 10px 0;
     padding: 8px;
     border-radius: 4px;
     display: none;
     text-align: center;
+    font-weight: 500;
+    transition: all 0.3s ease;
 }
 
-.status.success {
+.status.success, .upload-status.upload_success {
     background-color: #e8f5e9;
     color: #2e7d32;
     display: block;
+    animation: fadeIn 0.3s ease-in;
 }
 
-.status.error {
+.status.error, .upload-status.upload_error {
     background-color: #ffebee;
     color: #c62828;
     display: block;
+    animation: fadeIn 0.3s ease-in;
 }
 
-.status.loading {
+.status.fetching, .upload-status.uploading {
     background-color: #e3f2fd;
     color: #1565c0;
     display: block;
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .privacy-note {

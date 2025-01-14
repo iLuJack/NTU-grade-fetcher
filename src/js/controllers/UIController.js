@@ -18,7 +18,6 @@ export class UIController {
             actionButtons: document.getElementById('actionButtons'),
             uploadedData: document.getElementById('uploadedData'),
             lastUploadTime: document.getElementById('lastUploadTime'),
-            gistLink: document.getElementById('gistLink'),
             langEN: document.getElementById('langEN'),
             langZH: document.getElementById('langZH'),
             previewLink: document.getElementById('previewLink'),
@@ -51,6 +50,12 @@ export class UIController {
         const message = messages[messageKey]?.[this.currentLang] || messageKey;
         this.elements.statusMessage.textContent = message;
         this.elements.statusMessage.className = `status ${type}`;
+    }
+
+    showUploadStatus(messageKey, type = 'uploading') {
+        const message = messages[messageKey]?.[this.currentLang] || messageKey;
+        this.elements.uploadMessage.textContent = message;
+        this.elements.uploadMessage.className = `upload-status ${type}`;
     }
 
     displayGrades(grades) {
@@ -106,11 +111,5 @@ export class UIController {
         if (GIST_ID) {
             this.elements.previewLink.href = `https://gist.github.com/${GIST_ID}`;
         }
-    }
-
-    updateUploadInfo(gistUrl, timestamp) {
-        this.elements.uploadedData.style.display = 'block';
-        this.elements.lastUploadTime.textContent = new Date(timestamp).toLocaleString();
-        this.elements.gistLink.href = gistUrl;
     }
 } 

@@ -35,31 +35,23 @@ export class AppController {
 
     async handleUpload() {
         try {
-            if (!this.ui.currentGrades) {
-                this.ui.showStatus('no_grades');
-                return;
-            }
-            
-            this.ui.showStatus('uploading');
+            this.ui.showUploadStatus('uploading');
             
             try {
                 const { gistUrl } = await DataController.updateCentralGist(this.ui.currentGrades);
                 
                 // Store upload info
-                const timestamp = new Date().toISOString();
                 await chrome.storage.local.set({
                     'lastGistUrl': gistUrl,
-                    'lastUpload': timestamp
                 });
 
-                this.ui.updateUploadInfo(gistUrl, timestamp);
-                this.ui.showStatus('upload_success');
+                this.ui.showUploadStatus('upload_success');
             } catch (error) {
                 console.error('Upload error:', error);
                 if (error.message.includes('token')) {
-                    this.ui.showStatus('token_error');
+                    console.log('token error:', error);
                 } else {
-                    this.ui.showStatus('upload_error');
+                    this.ui.showUploadStatus('upload_error');
                 }
             }
         } catch (error) {
