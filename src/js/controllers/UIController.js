@@ -1,24 +1,20 @@
 import { messages, tableHeaders, distributionLabels } from '../utils/i18n.js';
-import config from '../../config/config.js';
 
 export class UIController {
     constructor() {
         this.initializeElements();
         this.initializeLanguage();
-        this.initializePreviewLink();
     }
 
     initializeElements() {
         this.elements = {
             fetchButton: document.getElementById('fetchGrades'),
             downloadButton: document.getElementById('downloadCSV'),
-            uploadButton: document.getElementById('uploadToGist'),
             statusMessage: document.getElementById('statusMessage'),
             gradesContainer: document.getElementById('gradesContainer'),
             actionButtons: document.getElementById('actionButtons'),
             langEN: document.getElementById('langEN'),
             langZH: document.getElementById('langZH'),
-            previewLink: document.getElementById('previewLink'),
             manualUploadButton: document.getElementById('manualUpload')
         };
         this.currentGrades = null;
@@ -48,13 +44,6 @@ export class UIController {
         const message = messages[messageKey]?.[this.currentLang] || messageKey;
         this.elements.statusMessage.textContent = message;
         this.elements.statusMessage.className = `status ${messageKey}`;
-    }
-
-    showUploadStatus(messageKey) {
-        const message = messages[messageKey]?.[this.currentLang] || messageKey;
-        const uploadMessage = document.getElementById('uploadMessage');
-        uploadMessage.textContent = message;
-        uploadMessage.className = `upload-status ${messageKey}`;
     }
 
     displayGrades(grades) {
@@ -102,13 +91,5 @@ export class UIController {
             </td>
         `;
         return row;
-    }
-
-    initializePreviewLink() {
-        // Get GIST_ID from config
-        const { GIST_ID } = config;
-        if (GIST_ID) {
-            this.elements.previewLink.href = `https://gist.github.com/${GIST_ID}`;
-        }
     }
 } 
