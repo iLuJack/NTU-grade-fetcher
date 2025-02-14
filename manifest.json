@@ -5,8 +5,7 @@
     "description": "Fetch your NTU grade distribution data",
     "permissions": [
         "activeTab",
-        "storage",
-        "scripting"
+        "storage"
     ],
 
     "host_permissions": [
